@@ -1,14 +1,12 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:toot/statics/colors.dart';
-
 import 'monument_search.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 class ScanCamera extends StatefulWidget {
   @override
   _ScanCameraState createState() => _ScanCameraState();
 }
-
 class _ScanCameraState extends State<ScanCamera> {
   @override
   Widget build(BuildContext context) {
@@ -62,11 +60,13 @@ class _ScanCameraState extends State<ScanCamera> {
                     children: <Widget>[
                       InkWell(
                         child: Image.asset("images/qr_scan.png",width: size.width/4,height: size.height/5,),
-                        onTap: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => MonumentSearch()),
-                          );
+                        onTap: ()async{
+                           await scanner.scan().then((name){
+                             Navigator.push(
+                               context,
+                               MaterialPageRoute(builder: (context) => MonumentSearch(name)),
+                             );
+                           });
                         },
                       ),
                       Image.asset("images/name_scan.png",width: size.width/4,height: size.height/5,),

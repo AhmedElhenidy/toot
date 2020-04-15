@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         primaryColor: mainColor,
         textSelectionColor: Colors.green
       ),
-      home: QR(),
+      home: ChooseLanguage(),
     );
   }
 }

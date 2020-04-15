@@ -1,10 +1,13 @@
 import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:toot/api/get_monument_api.dart';
+import 'package:toot/model/monument.dart';
 import 'package:toot/statics/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:audioplayers/audioplayers.dart';
 class MonumentInfo extends StatefulWidget {
+  GetMonumentServerResponse monumentDetails;
+  MonumentInfo(this.monumentDetails);
   @override
   _MonumentInfoState createState() => _MonumentInfoState();
 }
@@ -14,7 +17,7 @@ class _MonumentInfoState extends State<MonumentInfo> {
   Duration _position = new Duration();
   AudioPlayer advancedPlayer;
   AudioCache audioCache;
-
+  bool musicOn =false;
   @override
   void initState() {
     super.initState();
@@ -23,9 +26,7 @@ class _MonumentInfoState extends State<MonumentInfo> {
   }
 
   void initPlayer() {
-    advancedPlayer = new AudioPlayer(
-      mode: PlayerMode.LOW_LATENCY
-    );
+   advancedPlayer = new AudioPlayer();
     audioCache = new AudioCache(fixedPlayer: advancedPlayer);
 
     advancedPlayer.durationHandler = (d) => setState(() {
@@ -38,10 +39,8 @@ class _MonumentInfoState extends State<MonumentInfo> {
   }
   void seekToSecond(int second) {
     Duration newDuration = Duration(seconds: second);
-
     advancedPlayer.seek(newDuration);
   }
-
   String localFilePath;
   @override
   Widget build(BuildContext context) {
@@ -68,7 +67,7 @@ class _MonumentInfoState extends State<MonumentInfo> {
                   SizedBox(
                     height: 32,
                   ),
-                  Text("Statue of Tutankhamun",
+                  Text("${widget.monumentDetails.name}",
                     style: TextStyle(
                       color: mainColor,
                       fontSize: 20,
@@ -91,7 +90,8 @@ class _MonumentInfoState extends State<MonumentInfo> {
                         children: [
                           CarouselSlider(
                             items: [
-                              Image.asset("images/monument1.png"),
+                              Image.network(widget.monumentDetails.monumentImage[0].image),
+                              //Image.network(widget.monumentDetails.monumentImage[1].image),
                             ],
                             autoPlay: true,
                             aspectRatio: 2.0,
@@ -107,98 +107,101 @@ class _MonumentInfoState extends State<MonumentInfo> {
                   SizedBox(
                     height: 16,
                   ),
-                  Slider(
-                      activeColor: mainColor,
-                      value: _position.inSeconds.toDouble(),
-                      min: 0.0,
-                      max: _duration.inSeconds.toDouble(),
-                      onChanged: (double value) {
-                        setState(() {
-                          advancedPlayer.seek(Duration(seconds: value.toInt()));
-                          seekToSecond(value.toInt());
-                        });
-                      }
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      InkWell(
-                        onTap:()async{
-                          /*int result = await advancedPlayer.play(
+                  Container(
+                    child:musicOn? Column(
+                      children: <Widget>[
+                        Slider(
+                          onChangeStart:(double value) {
+                            print("on changed start");
+                            setState(() {
+                              advancedPlayer.seek(Duration(seconds: value.toInt()));
+                              seekToSecond(value.toInt());
+                            });
+                          } ,
+                          onChangeEnd:(double value) {
+                            print("on changed end");
+                            setState(() {
+                              advancedPlayer.seek(Duration(seconds: value.toInt()));
+                              seekToSecond(value.toInt());
+                            });
+                          },
+                            activeColor: mainColor,
+                            value: _position.inSeconds.toDouble(),
+                            min: 0.0,
+                            max: _duration.inSeconds.toDouble(),
+                            onChanged: (double value) {
+                              print("on changed ");
+                              setState(() {
+                               advancedPlayer.seek(Duration(seconds: value.toInt()));
+                               seekToSecond(value.toInt());
+                              });
+                            }
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            InkWell(
+                              onTap:()async{
+                                /*int result = await advancedPlayer.play(
                             "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
                           );
                           if (result == 1) {
                             print("oh yaaa");
                           }*/
-                          audioCache.play('toot.m4a');
-                        },
-                        child: Icon(Icons.play_circle_outline,
-                          size: 45,
-                          color: mainColor,
-                        ),
-                      ),
-                      SizedBox(width: 6,),
-                      InkWell(
-                        onTap: (){
-                          advancedPlayer.pause();
-                        },
-                        child: Icon(Icons.pause_circle_outline,
-                          size: 45,
-                          color: mainColor,
-                        ),
-                      ),
-                      SizedBox(width: 8,),
-                      InkWell(
-                        onTap: (){
-                          advancedPlayer.stop();
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: mainColor,
-                              width: 3
-                            )
-                          ),
-                          child: Icon(Icons.stop,
-                            size: 33,
-                            color: mainColor,
-                          ),
-                        ),
-                      ),
+                                audioCache.play('Graduation_project.ogg');
+                              },
+                              child: Icon(Icons.play_circle_outline,
+                                size: 45,
+                                color: mainColor,
+                              ),
+                            ),
+                            SizedBox(width: 6,),
+                            InkWell(
+                              onTap: (){
+                                advancedPlayer.pause();
+                              },
+                              child: Icon(Icons.pause_circle_outline,
+                                size: 45,
+                                color: mainColor,
+                              ),
+                            ),
+                            SizedBox(width: 8,),
+                            InkWell(
+                              onTap: (){
+                                advancedPlayer.stop();
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                        color: mainColor,
+                                        width: 3
+                                    )
+                                ),
+                                child: Icon(Icons.stop,
+                                  size: 33,
+                                  color: mainColor,
+                                ),
+                              ),
+                            ),
 
-                    ],
-                  ),
-                  InkWell(
-                    onTap: (){},
-                    child: Image.asset("images/click_to_play.png",height: size.height/9,),
+                          ],
+                        ),
+                      ],
+                    ):InkWell(
+                      onTap: (){
+                        setState(() {
+                          musicOn=true;
+                        });
+                        audioCache.play('Graduation_project.ogg');
+                      },
+                      child: Image.asset("images/click_to_play.png",height: size.height/9,),
+                    ),
                   ),
                   SizedBox(
                     height: 16,
                   ),
-                  Text("Tutankhamun, one of the pharaohs of the eighteenth "
-                      "Egyptian family in the history of ancient Egypt, was "
-                      "the Pharaoh of Egypt from 1334 to 1325 BC. In the era of "
-                      "the modern state. Tutankhamun is one of the most "
-                      "famous of the Pharaohs for reasons not related to the "
-                      "achievements he has achieved or wars he won, as is the "
-                      "case with many Pharaohs; but for other reasons that "
-                      "are historically important, most notably the discovery "
-                      "of his tomb and his treasures completely without any "
-                      "damage. The mystery surrounding the circumstances of "
-                      "his death as many considered the death of Pharaoh at "
-                      "a very young age is abnormal, especially with the S"
-                      "effects of fractures in the bones of the thigh and skull,"
-                      "and the marriage of his minister to his widow after his "
-                      "death and the inauguration of Pharaoh himself. All "
-                      "these  mysterious events, and the heavy use of the myth "
-                      "of the Pharaohs curse  associated with the tomb of "
-                      "Tutankhamun used in movies and video games have "
-                      "made Tutankhamun the most famous puzzles for "
-                      "puzzles and still unanswered questions, considered by "
-                      "some of the oldest assassinations in the history of "
-                      "humanity. The young Tutankhamun died and was "
-                      "buried in his tomb - Cemetery 62 - in the Valley of the Kings.",
+                  Text("${widget.monumentDetails.description}",
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: fontSize
