@@ -51,8 +51,8 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
             selectedLanguage =i;
           });
         },
-        itemExtent: 80,
-        magnification: 1.2,
+        itemExtent: 75,
+        magnification: 1.1,
         useMagnifier: true,
         children: <Widget>[
           Container(

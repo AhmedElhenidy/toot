@@ -53,17 +53,22 @@ flutter:
    - images/camera.png
    - images/voice.png
    - images/write.png
-   - images/museum.png
-   - images/giza.png
-   - images/gift.png
-   - images/badge.png
-   - images/searching.png
    - images/name_scan.png
    - images/qr_scan.png
    - images/monument_scan.png
    - images/monument1.png
    - images/egyptaian_museum.png
    - images/click_to_play.png
+   - images/badge40.png
+   - images/badge100.png
+   - images/gift40.png
+   - images/gift100.png
+   - images/giza40.png
+   - images/giza100.png
+   - images/museum40.png
+   - images/museum100.png
+   - images/searching40.png
+   - images/searching100.png
    - images/TootAnkhAmoon.jpg
    - assets/
 

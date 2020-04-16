@@ -9,7 +9,7 @@ class Caro extends StatefulWidget {
 
 class _CaroState extends State<Caro> {
   int page=0;
-  int duration = 500;
+  int duration = 300;
   @override
   Widget build(BuildContext context) {
     PageController _controller = PageController(

@@ -38,7 +38,7 @@ class _ScanCameraState extends State<ScanCamera> {
               ),
             ),
             SizedBox(
-              height: size.height/14,
+              height: size.height/16,
             ),
             Container(
               width: size.width/1.2,

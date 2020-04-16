@@ -18,8 +18,9 @@ class _MonumentSearchState extends State<MonumentSearch> {
     });
     GetMonumentApi().getMonument("${widget.name}").then((response){
       this.monumentInfo =response;
-      print(response);
-      print(monumentInfo.monumentImage[0].image);
+      this.monumentInfo.voice_note="http://www.egymuseums.somee.com0"+response.voice_note.substring(1);
+      print("http://www.egymuseums.somee.com0"+response.voice_note.substring(1));
+      print("http://www.egymuseums.somee.com0${monumentInfo.monumentImage[0].image.substring(1)}");
       print(monumentInfo.voice_note);
       setState(() {
         searchApiFlag =false;
@@ -122,7 +123,8 @@ class _MonumentSearchState extends State<MonumentSearch> {
                     Expanded(
                       flex: 1,
                       child: Container(
-                        child: Image.network("${monumentInfo.monumentImage[0].image}",fit: BoxFit.fill,),
+                        //child: Image.network("${monumentInfo.monumentImage[0].image}",fit: BoxFit.fill,),"http://www.egymuseums.somee.com0"+response.voice_note.substring(1)
+                        child: Image.network("http://www.egymuseums.somee.com0${monumentInfo.monumentImage[0].image.substring(1)}",fit: BoxFit.fill,),
                       ),
                     ),
                   ],
