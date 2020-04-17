@@ -11,7 +11,7 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomSheet: Container(
+      bottomNavigationBar: Container(
         height: 120,
         child: Center(
           child: Container(

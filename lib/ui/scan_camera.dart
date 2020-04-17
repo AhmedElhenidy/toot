@@ -13,7 +13,7 @@ class _ScanCameraState extends State<ScanCamera> {
   Widget build(BuildContext context) {
     Size size =MediaQuery.of(context).size;
     return Scaffold(
-      bottomSheet: bottomBar(size),
+      bottomNavigationBar: bottomBar(size),
       appBar: AppBar(
         actions: <Widget>[
           Icon(

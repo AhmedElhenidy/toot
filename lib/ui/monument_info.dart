@@ -26,6 +26,12 @@ class _MonumentInfoState extends State<MonumentInfo> {
   bool musicOn = false;
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    advancedPlayer.dispose();
+  }
+  @override
   void initState() {
     super.initState();
     //GetMonumentApi().getMonument("Statue of Tutankhamun");
@@ -33,7 +39,7 @@ class _MonumentInfoState extends State<MonumentInfo> {
   }
 
   void initPlayer() {
-    advancedPlayer = new AudioPlayer();
+    advancedPlayer = new AudioPlayer(mode: PlayerMode.MEDIA_PLAYER);
     audioCache = new AudioCache(fixedPlayer: advancedPlayer);
 
     advancedPlayer.durationHandler = (d) => setState(() {
@@ -127,6 +133,7 @@ class _MonumentInfoState extends State<MonumentInfo> {
                   SizedBox(
                     height: 16,
                   ),
+                  //media player
                   Container(
                     child: musicOn
                         ? Column(
@@ -149,13 +156,13 @@ class _MonumentInfoState extends State<MonumentInfo> {
                                 children: <Widget>[
                                   InkWell(
                                     onTap: () async {
-                                      /*print(widget.monumentDetails.voice_note);
+                                      print(widget.monumentDetails.voice_note);
                                       int result = await advancedPlayer.play(
                                         "${widget.monumentDetails.voice_note}",isLocal: false
                                       );
                                       if (result == 1) {
                                         print("oh yaaa");
-                                      }*/
+                                      }
                                       //audioCache.play('Graduation_project.ogg');
                                     },
                                     child: Icon(
@@ -202,7 +209,7 @@ class _MonumentInfoState extends State<MonumentInfo> {
                           )
                         : InkWell(
                             onTap: () async {
-                              /*int result = await advancedPlayer.play(
+                              int result = await advancedPlayer.play(
                                 "${widget.monumentDetails.voice_note}",
                               );
                               if (result == 1) {
@@ -211,8 +218,8 @@ class _MonumentInfoState extends State<MonumentInfo> {
                                   print("oh yaaa");
                                 });
                               }
-                              print(widget.monumentDetails.voice_note);*/
-                              audioCache.play('Graduation_project.ogg');
+                              print(widget.monumentDetails.voice_note);
+                              //audioCache.play('Graduation_project.ogg');
                             },
                             child: Image.asset(
                               "images/click_to_play.png",
@@ -242,7 +249,7 @@ class _MonumentInfoState extends State<MonumentInfo> {
               ),
             ),
             Positioned(
-              bottom: 110,
+              bottom: 5,
               right: size.width / 2.9,
               child: Row(
                 children: <Widget>[

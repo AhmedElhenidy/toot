@@ -42,6 +42,7 @@ class _MonumentSearchState extends State<MonumentSearch> {
   Widget build(BuildContext context) {
     Size size =MediaQuery.of(context).size;
     return Scaffold(
+      bottomNavigationBar: bottomBar(size),
       appBar: AppBar(
         actions: <Widget>[
           Icon(

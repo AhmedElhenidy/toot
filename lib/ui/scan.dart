@@ -12,7 +12,7 @@ class _ScanState extends State<Scan> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(),
-      bottomSheet:Container(
+      bottomNavigationBar:Container(
         color: Colors.transparent,
         height: 100,
         child: Stack(
