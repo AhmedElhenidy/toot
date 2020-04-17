@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:toot/statics/colors.dart';
+import 'package:toot/statics/statics.dart';
 import 'monument_search.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 class ScanCamera extends StatefulWidget {
@@ -12,6 +13,7 @@ class _ScanCameraState extends State<ScanCamera> {
   Widget build(BuildContext context) {
     Size size =MediaQuery.of(context).size;
     return Scaffold(
+      bottomSheet: bottomBar(size),
       appBar: AppBar(
         actions: <Widget>[
           Icon(

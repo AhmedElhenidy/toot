@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:toot/api/get_monument_api.dart';
 import 'package:toot/model/monument.dart';
 import 'package:toot/statics/colors.dart';
+import 'package:toot/statics/statics.dart';
 import 'monument_info.dart';
 class MonumentSearch extends StatefulWidget {
   String name;
@@ -18,9 +19,9 @@ class _MonumentSearchState extends State<MonumentSearch> {
     });
     GetMonumentApi().getMonument("${widget.name}").then((response){
       this.monumentInfo =response;
-      this.monumentInfo.voice_note="http://www.egymuseums.somee.com0"+response.voice_note.substring(1);
-      print("http://www.egymuseums.somee.com0"+response.voice_note.substring(1));
-      print("http://www.egymuseums.somee.com0${monumentInfo.monumentImage[0].image.substring(1)}");
+      this.monumentInfo.voice_note=hostName+response.voice_note.substring(1);
+      print(hostName+response.voice_note.substring(1));
+      print("$hostName${monumentInfo.monumentImage[0].image.substring(1)}");
       print(monumentInfo.voice_note);
       setState(() {
         searchApiFlag =false;
@@ -123,8 +124,8 @@ class _MonumentSearchState extends State<MonumentSearch> {
                     Expanded(
                       flex: 1,
                       child: Container(
-                        //child: Image.network("${monumentInfo.monumentImage[0].image}",fit: BoxFit.fill,),"http://www.egymuseums.somee.com0"+response.voice_note.substring(1)
-                        child: Image.network("http://www.egymuseums.somee.com0${monumentInfo.monumentImage[0].image.substring(1)}",fit: BoxFit.fill,),
+                       // child: Image.network("http://www.egymuseums.somee.com/Content/images/Menuments/monument120021605484.png",fit: BoxFit.fill,),
+                        child: Image.network("$hostName${monumentInfo.monumentImage[0].image.substring(1)}",fit: BoxFit.fill,),
                       ),
                     ),
                   ],
