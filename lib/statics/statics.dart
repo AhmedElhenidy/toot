@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'colors.dart';
 String hostName ="http://www.egymuseums.somee.com";
-Widget bottomBar(Size size) {
+Widget bottomBar(Size size,int selected) {
   return Container(
     height: 100,
     child: Stack(
@@ -18,19 +18,19 @@ Widget bottomBar(Size size) {
               backgroundColor: mainColor,
               items: [
                 BottomNavigationBarItem(
-                  icon: Image.asset("images/museum40.png",width: 30,height: 30,),
+                  icon: Image.asset(selected==BottomNavigationItems.MUSEUMS?"images/museum100.png":"images/museum40.png",width: 30,height: 30,),
                   title: Text("Museums",
                     style: TextStyle(
-                        color: Colors.white.withOpacity(0.5),
+                        color: selected==BottomNavigationItems.MUSEUMS?Colors.white: Colors.white.withOpacity(0.5),
                         fontSize: 16
                     ),
                   ),
                 ),
                 BottomNavigationBarItem(
-                  icon: Image.asset("images/giza40.png",width: 30,height: 35,),
+                  icon: Image.asset(selected==BottomNavigationItems.MONUMENT?"images/giza100.png":"images/giza40.png",width: 30,height: 35,),
                   title: Text("Monuments",
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.5),
+                      color:selected==BottomNavigationItems.MONUMENT?Colors.white: Colors.white.withOpacity(0.5),
                       fontSize: 14,
                     ),
                   ),
@@ -40,19 +40,19 @@ Widget bottomBar(Size size) {
                     title: Container()
                 ),
                 BottomNavigationBarItem(
-                  icon: Image.asset("images/badge40.png",width: 30,height: 30,),
+                  icon: Image.asset(selected==BottomNavigationItems.RECOMMENDED?"images/badge100.png":"images/badge40.png",width: 30,height: 30,),
                   title: Text("Recommended",
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.5),
+                      color: selected==BottomNavigationItems.RECOMMENDED?Colors.white:Colors.white.withOpacity(0.5),
                       fontSize: 14,
                     ),
                   ),
                 ),
                 BottomNavigationBarItem(
-                  icon: Image.asset("images/gift40.png",width: 30,height: 30,),
+                  icon: Image.asset(selected==BottomNavigationItems.GIFTS?"images/gift100.png":"images/gift40.png",width: 30,height: 30,),
                   title: Text("gifts",
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.5),
+                      color: selected==BottomNavigationItems.GIFTS?Colors.white:Colors.white.withOpacity(0.5),
                       fontSize: 16,
                     ),
                   ),
@@ -74,11 +74,11 @@ Widget bottomBar(Size size) {
                     color: mainColor,
                     shape: BoxShape.circle
                 ),
-                child: Image.asset("images/searching100.png",fit: BoxFit.fitHeight,),
+                child: Image.asset(selected==BottomNavigationItems.SCAN?"images/searching100.png":"images/searching40.png",fit: BoxFit.fitHeight,),
               ),
               Text("Scan",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: selected==BottomNavigationItems.SCAN?Colors.white:Colors.white.withOpacity(0.5),
                   fontSize: 16,
                   fontWeight: FontWeight.w800,
                 ),
@@ -89,4 +89,27 @@ Widget bottomBar(Size size) {
       ],
     ),
   );
+}
+Widget tootAppBar(){
+  return AppBar(
+    leading: Icon(
+      Icons.person_pin,
+      size: 40,
+      color: Colors.white,
+    ),
+    actions: [
+      Icon(
+        Icons.dehaze
+      ),
+      SizedBox(width: 16,),
+    ],
+    centerTitle: true,
+  );
+}
+class BottomNavigationItems{
+  static const int MUSEUMS =0;
+  static const int MONUMENT =1;
+  static const int SCAN =2;
+  static const int RECOMMENDED =3;
+  static const int GIFTS =4;
 }

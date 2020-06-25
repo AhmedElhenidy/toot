@@ -61,7 +61,7 @@ class _MonumentInfoState extends State<MonumentInfo> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      bottomNavigationBar: bottomBar(size),
+      bottomNavigationBar: bottomBar(size,BottomNavigationItems.SCAN),
       appBar: AppBar(
         actions: <Widget>[
           Icon(

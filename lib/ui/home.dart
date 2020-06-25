@@ -7,6 +7,8 @@ import 'package:toot/model/monuments_model.dart';
 import 'package:toot/model/museum_model.dart';
 import 'package:toot/statics/colors.dart';
 import 'package:toot/statics/data_constatnts.dart';
+
+import 'mueseums.dart';
 class Home extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -21,7 +23,6 @@ class _MyHomePageState extends State<Home> {
   List<MuseumsModel> museumsList=[];
   List<MonumentsModel> monumentsList=[];
   List<GiftsModel> giftsList=[];
-
   bool loading= false;
   getHomeSections(){
     setState(() =>loading=true);
@@ -62,7 +63,7 @@ class _MyHomePageState extends State<Home> {
          children: [
            //Museums
            Container(
-             height: sectionHeight,
+             height: sectionHeight+4,
              child: Column(
                children: [
                  Container(
@@ -71,13 +72,21 @@ class _MyHomePageState extends State<Home> {
                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                      children: [
                        Text("Museums"),
-                       Text("More"),
+                       InkWell(
+                         onTap: (){
+                           Navigator.push(
+                               context,
+                               MaterialPageRoute(builder: (context) => Museums(museumsList)),
+                           );
+                         },
+                         child: Text("More"),
+                       ),
                      ],
                    ),
                  ),
                  Container(
                    width:size.width ,
-                   height: 100,
+                   height: 104,
                    child: ListView.builder(
                      itemCount: museumsList.length,
                      scrollDirection: Axis.horizontal,
@@ -85,7 +94,7 @@ class _MyHomePageState extends State<Home> {
                        MuseumsModel museum =museumsList[position];
                        return Container(
                          padding: EdgeInsets.only(left: 8,right: 8),
-                         height: 85,
+                         height: 90,
                           width: 126,
                          child: Column(
                            children: [
