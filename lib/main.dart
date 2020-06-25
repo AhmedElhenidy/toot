@@ -14,9 +14,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'TooT',
       theme: ThemeData(
+        textTheme: Theme.of(context).textTheme.apply(
+          bodyColor: mainColor,
+          displayColor: Colors.pink,
+        ),
         primaryColor: mainColor,
       ),
-      home: ChooseLanguage(),
+      home: Home(),
     );
   }
 }

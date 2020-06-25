@@ -18,7 +18,6 @@ class MonumentInfo extends StatefulWidget {
 
 class _MonumentInfoState extends State<MonumentInfo> {
   double fontSize = 15;
-
   Duration _duration = new Duration();
   Duration _position = new Duration();
   AudioPlayer advancedPlayer;

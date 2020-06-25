@@ -70,6 +70,14 @@ flutter:
    - images/searching40.png
    - images/searching100.png
    - images/TootAnkhAmoon.jpg
+   - images/scanImage0.png
+   - images/scanImage1.png
+   - images/scanImage2.png
+   - images/scanImage3.png
+   - images/scanImage4.png
+   - images/recommended0.png
+   - images/recommended1.png
+   - images/recommended2.png
    - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
