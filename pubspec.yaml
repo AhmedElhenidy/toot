@@ -79,6 +79,9 @@ flutter:
    - images/recommended1.png
    - images/recommended2.png
    - images/tour_guide.png
+   - images/reco1.png
+   - images/reco2.png
+   - images/vip.png
    - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see

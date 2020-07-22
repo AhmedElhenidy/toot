@@ -109,7 +109,6 @@ class Houses extends StatefulWidget {
   @override
   _HousesState createState() => _HousesState();
 }
-
 class _HousesState extends State<Houses> {
   List<HousesModel> houseList;
   bool loading;
@@ -137,9 +136,10 @@ class _HousesState extends State<Houses> {
                     fontWeight: FontWeight.bold
                 ),
               ),
+              SizedBox(height: 8,),
               Image.network("${house.photo}",
                 width: MediaQuery.of(context).size.width,
-                height: 226,
+                height: 218,
                 fit: BoxFit.fill,
               ),
             ],

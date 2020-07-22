@@ -1,4 +1,4 @@
-
+import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:toot/api/home_api.dart';
@@ -6,17 +6,17 @@ import 'package:toot/model/gifts_model.dart';
 import 'package:toot/model/monuments_model.dart';
 import 'package:toot/model/museum_model.dart';
 import 'package:toot/statics/colors.dart';
-import 'package:toot/statics/data_constatnts.dart';
 import 'package:toot/ui/gift_houses.dart';
+import 'package:toot/ui/monument_search.dart';
 import 'package:toot/ui/monuments.dart';
-
+import 'package:toot/ui/recommended.dart';
+import 'package:toot/ui/scan.dart';
 import 'monument_info.dart';
 import 'mueseums.dart';
 class Home extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
-
 class _MyHomePageState extends State<Home> {
   List<String> scanImages=[""];
   List<String> scanNames=["QR code","scan monument","scan name","write","voice"];
@@ -263,7 +263,15 @@ class _MyHomePageState extends State<Home> {
                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                      children: [
                        Text("Scan Monuments"),
-                       Text("More"),
+                       InkWell(
+                         onTap: (){
+                           Navigator.push(
+                             context,
+                             MaterialPageRoute(builder: (context) => Scan()),
+                           );
+                         },
+                         child: Text("More"),
+                       ),
                      ],
                    ),
                  ),
@@ -278,22 +286,32 @@ class _MyHomePageState extends State<Home> {
                          padding: EdgeInsets.only(left: 8,right: 8),
                          height: 85,
                          width: 85,
-                         child: Column(
-                           children: [
-                             Container(
-                               width: 62,height: 72,
-                               child: Image.asset("images/scanImage$position.png",fit: BoxFit.fill,),
-                             ),
-                             SizedBox(height: 8,),
-                             Container(
-                               width: 110,
-                               child: Text(scanNames[position],
-                                 textAlign: TextAlign.start,
-                                 maxLines: 1,
-                                 overflow: TextOverflow.ellipsis,
+                         child: InkWell(
+                           onTap: position==0?()async{
+                             await scanner.scan().then((name){
+                               Navigator.push(
+                                 context,
+                                 MaterialPageRoute(builder: (context) => MonumentSearch(name)),
+                               );
+                             });
+                            }:(){},
+                           child: Column(
+                             children: [
+                               Container(
+                                 width: 62,height: 72,
+                                 child: Image.asset("images/scanImage$position.png",fit: BoxFit.fill,),
                                ),
-                             ),
-                           ],
+                               SizedBox(height: 8,),
+                               Container(
+                                 width: 110,
+                                 child: Text(scanNames[position],
+                                   textAlign: TextAlign.start,
+                                   maxLines: 1,
+                                   overflow: TextOverflow.ellipsis,
+                                 ),
+                               ),
+                             ],
+                           ),
                          ),
                        );
                      },
@@ -313,7 +331,15 @@ class _MyHomePageState extends State<Home> {
                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                      children: [
                        Text("Recommended"),
-                       Text("More"),
+                       InkWell(
+                         onTap: (){
+                           Navigator.push(
+                             context,
+                             MaterialPageRoute(builder: (context) => Recommended()),
+                           );
+                         },
+                         child: Text("More"),
+                       ),
                      ],
                    ),
                  ),
