@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toot/api/get_monument_api.dart';
 import 'package:toot/model/monument.dart';
+import 'package:toot/model/monuments_model.dart';
 import 'package:toot/statics/colors.dart';
 import 'package:toot/statics/statics.dart';
 import 'monument_info.dart';
@@ -11,7 +12,7 @@ class MonumentSearch extends StatefulWidget {
   _MonumentSearchState createState() => _MonumentSearchState();
 }
 class _MonumentSearchState extends State<MonumentSearch> {
-  GetMonumentServerResponse monumentInfo;
+  MonumentModel monumentInfo;
   bool searchApiFlag =false ;
   searchApi(){
     setState(() {
@@ -21,7 +22,6 @@ class _MonumentSearchState extends State<MonumentSearch> {
       this.monumentInfo =response;
       this.monumentInfo.voice_note=hostName+response.voice_note.substring(1);
       print(hostName+response.voice_note.substring(1));
-      print("$hostName${monumentInfo.monumentImage[0].image.substring(1)}");
       print(monumentInfo.voice_note);
       setState(() {
         searchApiFlag =false;
@@ -109,7 +109,7 @@ class _MonumentSearchState extends State<MonumentSearch> {
                               onPressed: (){
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => MonumentInfo(monumentInfo)),
+                                  MaterialPageRoute(builder: (context) => MonumentInfo(monumentDetails: monumentInfo,)),
                                 );
                               },
                               child: Text("  Know more  ",
@@ -126,7 +126,7 @@ class _MonumentSearchState extends State<MonumentSearch> {
                       flex: 1,
                       child: Container(
                        // child: Image.network("http://www.egymuseums.somee.com/Content/images/Menuments/monument120021605484.png",fit: BoxFit.fill,),
-                        child: Image.network("$hostName${monumentInfo.monumentImage[0].image.substring(1)}",fit: BoxFit.fill,),
+                        child: Image.network("${monumentInfo.menument_images[0].image}",fit: BoxFit.fill,),
                       ),
                     ),
                   ],

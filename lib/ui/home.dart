@@ -10,6 +10,7 @@ import 'package:toot/statics/data_constatnts.dart';
 import 'package:toot/ui/gift_houses.dart';
 import 'package:toot/ui/monuments.dart';
 
+import 'monument_info.dart';
 import 'mueseums.dart';
 class Home extends StatefulWidget {
   @override
@@ -154,27 +155,35 @@ class _MyHomePageState extends State<Home> {
                      scrollDirection: Axis.horizontal,
                      itemBuilder: (context,position){
                        MonumentsModel monument =monumentsList[position];
-                       return Container(
-                         padding: EdgeInsets.only(left: 8,right: 8),
-                         height: 85,
-                         width: 126,
-                         child: Column(
-                           children: [
-                             Container(
-                               color: mainColor,
-                               width: 126,height: 72,
-                               child: Image.network("${monument.images.length>0?monument.images.first.image??"":""}",fit: BoxFit.fill,),
-                             ),
-                             SizedBox(height: 8,),
-                             Container(
-                               width: 126,
-                               child: Text("${monument.name}",
-                                 textAlign: TextAlign.start,
-                                 maxLines: 1,
-                                 overflow: TextOverflow.ellipsis,
+                       return InkWell(
+                         onTap: (){
+                           Navigator.push(
+                             context,
+                             MaterialPageRoute(builder: (context) => MonumentInfo(id: monument.id,)),
+                           );
+                         },
+                         child: Container(
+                           padding: EdgeInsets.only(left: 8,right: 8),
+                           height: 85,
+                           width: 126,
+                           child: Column(
+                             children: [
+                               Container(
+                                 color: mainColor,
+                                 width: 126,height: 72,
+                                 child: Image.network("${monument.images.length>0?monument.images.first.image??"":""}",fit: BoxFit.fill,),
                                ),
-                             ),
-                           ],
+                               SizedBox(height: 8,),
+                               Container(
+                                 width: 126,
+                                 child: Text("${monument.name}",
+                                   textAlign: TextAlign.start,
+                                   maxLines: 1,
+                                   overflow: TextOverflow.ellipsis,
+                                 ),
+                               ),
+                             ],
+                           ),
                          ),
                        );
                      },

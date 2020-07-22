@@ -4,6 +4,7 @@ import 'package:toot/model/monuments_model.dart';
 import 'package:toot/model/museum_model.dart';
 import 'package:toot/statics/colors.dart';
 import 'package:toot/statics/statics.dart';
+import 'package:toot/ui/monument_info.dart';
 class Monuments extends StatefulWidget {
   List<MonumentsModel> monumentList;
   Monuments(this.monumentList);
@@ -62,27 +63,35 @@ class _MuseumsState extends State<Monuments> {
                ),
                 itemCount: widget.monumentList.length,
                 itemBuilder: (context,position){
-                  MonumentsModel museum =widget.monumentList[position];
-                  return Container(
-                   // width: (size.width/2)-38,
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 126,
-                          child: Text("${museum.name}",
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                  MonumentsModel monument =widget.monumentList[position];
+                  return InkWell(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MonumentInfo(id: monument.id,)),
+                      );
+                    },
+                    child: Container(
+                     // width: (size.width/2)-38,
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 126,
+                            child: Text("${monument.name}",
+                              textAlign: TextAlign.center,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 8,),
-                        Container(
-                          color: mainColor,
-                          width: (size.width/2)-38,
-                          height: 90,
-                          child: Image.network("${museum.images.length>0?museum.images.first.image??"":""}",fit: BoxFit.cover,),
-                        ),
-                      ],
+                          SizedBox(height: 8,),
+                          Container(
+                            color: mainColor,
+                            width: (size.width/2)-38,
+                            height: 90,
+                            child: Image.network("${monument.images.length>0?monument.images.first.image??"":""}",fit: BoxFit.fill,),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },

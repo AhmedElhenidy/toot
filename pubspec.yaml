@@ -78,6 +78,7 @@ flutter:
    - images/recommended0.png
    - images/recommended1.png
    - images/recommended2.png
+   - images/tour_guide.png
    - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -81,26 +81,31 @@ class _MuseumsState extends State<Museums> {
                 itemCount: widget.museumsList.length,
                 itemBuilder: (context,position){
                   MuseumsModel museum =widget.museumsList[position];
-                  return Container(
-                   // width: (size.width/2)-38,
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 126,
-                          child: Text("${museum.name}",
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                  return InkWell(
+                    onTap: (){
+
+                    },
+                    child: Container(
+                     // width: (size.width/2)-38,
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 126,
+                            child: Text("${museum.name}",
+                              textAlign: TextAlign.center,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 8,),
-                        Container(
-                          color: mainColor,
-                          width: (size.width/2)-38,
-                          height: 90,
-                          child: Image.network("${museum.images.length>0?museum.images.first.image??"":""}",fit: BoxFit.cover,),
-                        ),
-                      ],
+                          SizedBox(height: 8,),
+                          Container(
+                            color: mainColor,
+                            width: (size.width/2)-38,
+                            height: 90,
+                            child: Image.network("${museum.images.length>0?museum.images.first.image??"":""}",fit: BoxFit.cover,),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },

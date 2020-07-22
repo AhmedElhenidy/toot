@@ -12,7 +12,8 @@ const Map<String, String> apiHeaders = {
 
 // file Path : api\auth_apis.dart end_points
 const String HOME_END_POINT = "rpc/ApiPlaces/GetHome";
-const String HOUSES_END_POINT = "api/ApiHouses";
+const String HOUSES_END_POINT = "rpc/ApiHouses/Gethouses";
+const String GET_MONUMENT_BY_ID_END_POINT = "rpc/ApiMenuments/Getmenument/";
 
 
 

@@ -3,27 +3,42 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:toot/api/get_monument_api.dart';
 import 'package:toot/model/monument.dart';
+import 'package:toot/model/monuments_model.dart';
 import 'package:toot/statics/colors.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:toot/statics/statics.dart';
 
 class MonumentInfo extends StatefulWidget {
-  GetMonumentServerResponse monumentDetails;
-
-  MonumentInfo(this.monumentDetails);
+  MonumentModel monumentDetails;
+  int id;
+  MonumentInfo({this.monumentDetails,this.id});
 
   @override
   _MonumentInfoState createState() => _MonumentInfoState();
 }
 
 class _MonumentInfoState extends State<MonumentInfo> {
+  MonumentModel monumentDetails;
   double fontSize = 15;
   Duration _duration = new Duration();
   Duration _position = new Duration();
   AudioPlayer advancedPlayer;
   AudioCache audioCache;
   bool musicOn = false;
-
+  bool loading= false;
+  getHomeHouses(){
+    setState(() =>loading=true);
+    GetMonumentApiProvider.getMonumentByID(
+      id: widget.id,
+        onError: ()=>setState(() =>loading=true),
+        onSuccess: (monument){
+          setState(() {
+            this.monumentDetails=monument;
+            loading=false;
+          });
+        }
+    );
+  }
   @override
   void dispose() {
     // TODO: implement dispose
@@ -33,10 +48,14 @@ class _MonumentInfoState extends State<MonumentInfo> {
   @override
   void initState() {
     super.initState();
-    //GetMonumentApi().getMonument("Statue of Tutankhamun");
     initPlayer();
-  }
+    null !=widget.monumentDetails
+        ?
+    this.monumentDetails=widget.monumentDetails
+        :
+    getHomeHouses();
 
+  }
   void initPlayer() {
     advancedPlayer = new AudioPlayer(mode: PlayerMode.MEDIA_PLAYER);
     audioCache = new AudioCache(fixedPlayer: advancedPlayer);
@@ -73,7 +92,7 @@ class _MonumentInfoState extends State<MonumentInfo> {
           ),
         ],
       ),
-      body: Container(
+      body: loading?Center(child: CircularProgressIndicator()):Container(
         width: size.width,
         height: size.height,
         padding: EdgeInsets.only(left: 16, right: 16),
@@ -86,7 +105,7 @@ class _MonumentInfoState extends State<MonumentInfo> {
                     height: 32,
                   ),
                   Text(
-                    "${widget.monumentDetails.name}",
+                    "${monumentDetails.name}",
                     style: TextStyle(
                       color: mainColor,
                       fontSize: 20,
@@ -104,16 +123,16 @@ class _MonumentInfoState extends State<MonumentInfo> {
                     ),
                     child: Stack(
                         children:
-                            widget.monumentDetails.monumentImage.length > 1
+                            monumentDetails.menument_images.length > 1
                                 ? [
                                     CarouselSlider(
                                       items: [
                                         Image.network(
-                                            "$hostName${widget.monumentDetails.monumentImage[0].image.substring(1)}"),
+                                            "${monumentDetails.menument_images[0].image}"),
                                         Image.network(
-                                            "$hostName${widget.monumentDetails.monumentImage[1].image.substring(1)}"),
+                                            "${monumentDetails.menument_images[1].image}"),
                                         Image.network(
-                                            "$hostName${widget.monumentDetails.monumentImage[2].image.substring(1)}"),
+                                            "${monumentDetails.menument_images[2]}"),
                                       ],
                                       autoPlay: true,
                                       aspectRatio: 2.0,
@@ -126,7 +145,7 @@ class _MonumentInfoState extends State<MonumentInfo> {
                                   ]
                                 : [
                                     Image.network(
-                                        "$hostName${widget.monumentDetails.monumentImage[0].image.substring(1)}"),
+                                        "${monumentDetails.menument_images[0].image}"),
                                   ]),
                   ),
                   SizedBox(
@@ -155,9 +174,9 @@ class _MonumentInfoState extends State<MonumentInfo> {
                                 children: <Widget>[
                                   InkWell(
                                     onTap: () async {
-                                      print(widget.monumentDetails.voice_note);
+                                      print(monumentDetails.voice_note);
                                       int result = await advancedPlayer.play(
-                                        "${widget.monumentDetails.voice_note}",isLocal: false
+                                        "${monumentDetails.voice_note}",isLocal: false
                                       );
                                       if (result == 1) {
                                         print("oh yaaa");
@@ -209,7 +228,7 @@ class _MonumentInfoState extends State<MonumentInfo> {
                         : InkWell(
                             onTap: () async {
                               int result = await advancedPlayer.play(
-                                "${widget.monumentDetails.voice_note}",
+                                "${monumentDetails.voice_note}",
                               );
                               if (result == 1) {
                                 setState(() {
@@ -217,7 +236,7 @@ class _MonumentInfoState extends State<MonumentInfo> {
                                   print("oh yaaa");
                                 });
                               }
-                              print(widget.monumentDetails.voice_note);
+                              print(monumentDetails.voice_note);
                               //audioCache.play('Graduation_project.ogg');
                             },
                             child: Image.asset(
@@ -229,16 +248,57 @@ class _MonumentInfoState extends State<MonumentInfo> {
                   SizedBox(
                     height: 16,
                   ),
+                  widget.id==null?
+                  Container():
+                  Column(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: mainColor,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.location_on,color: Colors.white,size: 20,),
+                            Text("The Monument on google maps",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: fontSize
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                    ],
+                  ),
                   Text(
-                    "${widget.monumentDetails.description}",
+                    "${monumentDetails.description}",
                     style: TextStyle(
                         fontWeight: FontWeight.w900, fontSize: fontSize),
                   ),
                   SizedBox(
                     height: 16,
                   ),
+                  /*Text(
+                    "${monumentDetails.place_name}",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w900, fontSize: 22),
+                  ),*/
+                  //tour_guide
+                  widget.id==null?
                   Image.asset(
                     "images/egyptaian_museum.png",
+                    height: size.height / 4,
+                  ):
+                  Image.asset(
+                    "images/tour_guide.png",
                     height: size.height / 4,
                   ),
                   SizedBox(
