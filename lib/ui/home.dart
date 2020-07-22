@@ -7,6 +7,8 @@ import 'package:toot/model/monuments_model.dart';
 import 'package:toot/model/museum_model.dart';
 import 'package:toot/statics/colors.dart';
 import 'package:toot/statics/data_constatnts.dart';
+import 'package:toot/ui/gift_houses.dart';
+import 'package:toot/ui/monuments.dart';
 
 import 'mueseums.dart';
 class Home extends StatefulWidget {
@@ -132,7 +134,15 @@ class _MyHomePageState extends State<Home> {
                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                      children: [
                        Text("Monuments"),
-                       Text("More"),
+                       InkWell(
+                         onTap: (){
+                           Navigator.push(
+                             context,
+                             MaterialPageRoute(builder: (context) => Monuments(monumentsList)),
+                           );
+                         },
+                         child: Text("More"),
+                       ),
                      ],
                    ),
                  ),
@@ -184,7 +194,15 @@ class _MyHomePageState extends State<Home> {
                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                      children: [
                        Text("Gifts"),
-                       Text("More"),
+                       InkWell(
+                         onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => GiftsAndHouses(giftsList)),
+                            );
+                         },
+                         child: Text("More"),
+                       ),
                      ],
                    ),
                  ),
@@ -294,7 +312,7 @@ class _MyHomePageState extends State<Home> {
                    width:size.width ,
                    height: 100,
                    child: ListView.builder(
-                     itemCount: 5,
+                     itemCount: 3,
                      scrollDirection: Axis.horizontal,
                      itemBuilder: (context,position){
                        return Container(

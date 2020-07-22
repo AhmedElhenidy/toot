@@ -19,6 +19,10 @@ class MyApp extends StatelessWidget {
           displayColor: Colors.pink,
         ),
         primaryColor: mainColor,
+        bottomAppBarColor: Colors.red,
+        bottomAppBarTheme: BottomAppBarTheme(
+          color: Colors.yellow
+        ),
       ),
       home: Home(),
     );
