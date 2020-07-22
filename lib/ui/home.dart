@@ -1,3 +1,4 @@
+import 'package:flutter_mobile_vision/flutter_mobile_vision.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,8 @@ class _MyHomePageState extends State<Home> {
   }
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         leading: Icon(
@@ -88,7 +90,7 @@ class _MyHomePageState extends State<Home> {
                    ),
                  ),
                  Container(
-                   width:size.width ,
+                   width:width ,
                    height: 104,
                    child: ListView.builder(
                      itemCount: museumsList.length,
@@ -148,7 +150,7 @@ class _MyHomePageState extends State<Home> {
                    ),
                  ),
                  Container(
-                   width:size.width ,
+                   width:width ,
                    height: 100,
                    child: ListView.builder(
                      itemCount: monumentsList.length,
@@ -216,7 +218,7 @@ class _MyHomePageState extends State<Home> {
                    ),
                  ),
                  Container(
-                   width:size.width ,
+                   width:width ,
                    height: 100,
                    child: ListView.builder(
                      itemCount: giftsList.length,
@@ -276,7 +278,7 @@ class _MyHomePageState extends State<Home> {
                    ),
                  ),
                  Container(
-                   width:size.width ,
+                   width:width ,
                    height: 100,
                    child: ListView.builder(
                      itemCount: 5,
@@ -287,14 +289,36 @@ class _MyHomePageState extends State<Home> {
                          height: 85,
                          width: 85,
                          child: InkWell(
-                           onTap: position==0?()async{
+                           onTap:
+                           position==0
+                               ?()async{
                              await scanner.scan().then((name){
                                Navigator.push(
                                  context,
                                  MaterialPageRoute(builder: (context) => MonumentSearch(name)),
                                );
                              });
-                            }:(){},
+                            }
+                            :position==2
+                               ?()async{
+                               List<OcrText> texts = [];
+                               try {
+                                 await FlutterMobileVision.read(
+                                   autoFocus: true,
+                                   showText: true,
+                                   multiple: true,
+                                   waitTap: true,
+                                 ).then((value) {
+                                   Navigator.push(
+                                     context,
+                                     MaterialPageRoute(builder: (context) => MonumentSearch(value.first.value??"")),
+                                   );
+                                 });
+                               } on Exception {
+                                 texts.add(new OcrText('Failed to recognize text.'));
+                               }
+
+                           }:(){},
                            child: Column(
                              children: [
                                Container(
@@ -344,7 +368,7 @@ class _MyHomePageState extends State<Home> {
                    ),
                  ),
                  Container(
-                   width:size.width ,
+                   width:width ,
                    height: 100,
                    child: ListView.builder(
                      itemCount: 3,

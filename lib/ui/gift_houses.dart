@@ -83,18 +83,23 @@ class Gifts extends StatelessWidget {
       itemBuilder: (context,position){
         GiftsModel gift = giftsList[position];
         return Container(
-          height: 265,
+          height: 285,
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
               Text("${gift.name}",
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold
                 ),
               ),
+              SizedBox(height: 4,),
               Image.network("${gift.photo}",
-                width: MediaQuery.of(context).size.width,height: 226,),
+                width: MediaQuery.of(context).size.width,height: 210,fit: BoxFit.fitHeight,),
+              SizedBox(height: 16,),
             ],
           ),
         );
@@ -126,11 +131,13 @@ class _HousesState extends State<Houses> {
       itemBuilder: (context,position){
         HousesModel house = houseList[position];
         return Container(
-          height: 265,
+          height: 285,
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
               Text("${house.name}",
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold
@@ -139,9 +146,10 @@ class _HousesState extends State<Houses> {
               SizedBox(height: 8,),
               Image.network("${house.photo}",
                 width: MediaQuery.of(context).size.width,
-                height: 218,
+                height: 208,
                 fit: BoxFit.fill,
               ),
+              SizedBox(height: 16,),
             ],
           ),
         );

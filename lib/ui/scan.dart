@@ -26,10 +26,10 @@ class _ScanState extends State<Scan> {
                 fontSize: 26,
                 color: mainColor,
                 fontWeight: FontWeight.w900,
-                height: 3,
+                height: 2,
               ),
             ),
-            Container(height: size.height/16,),
+            Container(height: size.height/22,),
             InkWell(
               onTap: (){
                 Navigator.push(

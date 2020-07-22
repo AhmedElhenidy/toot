@@ -4,16 +4,17 @@ import 'package:toot/statics/colors.dart';
 import 'package:toot/statics/statics.dart';
 import 'monument_search.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:flutter_mobile_vision/flutter_mobile_vision.dart';
 class ScanCamera extends StatefulWidget {
   @override
   _ScanCameraState createState() => _ScanCameraState();
 }
 class _ScanCameraState extends State<ScanCamera> {
+  String _textValue="";
   @override
   Widget build(BuildContext context) {
-    Size size =MediaQuery.of(context).size;
     return Scaffold(
-      bottomNavigationBar: bottomBar(size,BottomNavigationItems.SCAN),
+      bottomNavigationBar: bottomBar(MediaQuery.of(context).size,BottomNavigationItems.SCAN),
       appBar: AppBar(
         actions: <Widget>[
           Icon(
@@ -24,8 +25,8 @@ class _ScanCameraState extends State<ScanCamera> {
         ],
       ),
       body: Container(
-        width: size.width ,
-        height: size.height,
+        width: MediaQuery.of(context).size.width ,
+        height: MediaQuery.of(context).size.height,
         padding: EdgeInsets.all(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -36,15 +37,15 @@ class _ScanCameraState extends State<ScanCamera> {
                 fontSize: 26,
                 color: mainColor,
                 fontWeight: FontWeight.w900,
-                height: 3,
+                height: 2,
               ),
             ),
             SizedBox(
-              height: size.height/16,
+              height: MediaQuery.of(context).size.height/22,
             ),
             Container(
-              width: size.width/1.2,
-              height: size.height/2,
+              width: MediaQuery.of(context).size.width/1.2,
+              height: MediaQuery.of(context).size.height/2,
               decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
@@ -61,7 +62,7 @@ class _ScanCameraState extends State<ScanCamera> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       InkWell(
-                        child: Image.asset("images/qr_scan.png",width: size.width/4,height: size.height/5,),
+                        child: Image.asset("images/qr_scan.png",width: MediaQuery.of(context).size.width/4,height: MediaQuery.of(context).size.height/5,),
                         onTap: ()async{
                            await scanner.scan().then((name){
                              Navigator.push(
@@ -71,10 +72,41 @@ class _ScanCameraState extends State<ScanCamera> {
                            });
                         },
                       ),
-                      Image.asset("images/name_scan.png",width: size.width/4,height: size.height/5,),
+                      InkWell(
+                        child: Image.asset("images/name_scan.png",width: MediaQuery.of(context).size.width/4,height: MediaQuery.of(context).size.height/5,),
+                        onTap: ()async{
+                          List<OcrText> texts = [];
+                          try {
+                           await FlutterMobileVision.read(
+                              autoFocus: true,
+                              showText: true,
+                              multiple: true,
+                              waitTap: true,
+                            ).then((value) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => MonumentSearch(value.first.value??"")),
+                              );
+                            });
+
+                            setState(() {
+                              _textValue = texts[0].value; // Getting first text block....
+                              print("============\n${texts.length}");
+                            });
+                          } on Exception {
+                            texts.add(new OcrText('Failed to recognize text.'));
+                          }
+                        },
+                      ),
                     ],
                   ),
-                  Image.asset("images/monument_scan.png",width: size.width/4,height: size.height/5,),
+                  Image.asset("images/monument_scan.png",width: MediaQuery.of(context).size.width/4,height: MediaQuery.of(context).size.height/5,),
+
+                  Text("read Text :::\n$_textValue",
+                    style: TextStyle(
+                      color: Colors.white
+                    ),
+                  ),
                 ],
               ),
             ),

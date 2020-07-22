@@ -1,3 +1,5 @@
+import 'package:toot/statics/data_constatnts.dart';
+
 class HousesModel {
     String description;
     String governorate;
@@ -14,7 +16,7 @@ class HousesModel {
             governorate: json['governorate'],
             id: json['id'],
             name: json['name'],
-            photo: json['photo'],
+            photo: json['photo']!=null?"$BASE_URL${json['photo'].toString().substring(1)}":"",
             relatedWith: json['relatedWith'],
         );
     }
