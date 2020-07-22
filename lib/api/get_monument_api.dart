@@ -11,7 +11,7 @@ class GetMonumentApi{
     print(url);
     final response = await http.get(url);
     final jsonResponse = json.decode(response.body);
-    print(jsonResponse);
+    print("res "+jsonResponse);
     return  MonumentModel.fromJson(jsonResponse);
   }
 }

@@ -14,20 +14,30 @@ class MonumentSearch extends StatefulWidget {
 class _MonumentSearchState extends State<MonumentSearch> {
   MonumentModel monumentInfo;
   bool searchApiFlag =false ;
+  bool isnull= false;
   searchApi(){
     setState(() {
       searchApiFlag =true;
     });
     GetMonumentApi().getMonument("${widget.name}").then((response){
-      this.monumentInfo =response;
-      this.monumentInfo.voice_note=hostName+response.voice_note.substring(1);
-      print(hostName+response.voice_note.substring(1));
-      print(monumentInfo.voice_note);
+      if(response==null){
+        setState(() {
+
+        });
+      }
+      else{
+        this.monumentInfo =response;
+        this.monumentInfo.voice_note=hostName+response.voice_note.substring(1);
+        print(hostName+response.voice_note.substring(1));
+        print(monumentInfo.voice_note);
+      }
+
       setState(() {
         searchApiFlag =false;
       });
     },onError: (error){
       setState(() {
+        isnull=true;
         searchApiFlag=false;
         print(error.toString());
       });
@@ -56,7 +66,7 @@ class _MonumentSearchState extends State<MonumentSearch> {
         width: size.width ,
         height: size.height,
         padding: EdgeInsets.only(left: 16,right: 16),
-        child: SingleChildScrollView(
+        child: isnull?Center(child: Text("cannot recognize the item "),):SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -82,7 +92,7 @@ class _MonumentSearchState extends State<MonumentSearch> {
                       child: Container(
                         child: Column(
                           children: <Widget>[
-                            Text("${monumentInfo.name}",
+                            Text("${monumentInfo.name??""}",
                               style: TextStyle(
                                   color: mainColor,
                                   fontSize: 16,
@@ -90,7 +100,7 @@ class _MonumentSearchState extends State<MonumentSearch> {
                               ),
                             ),
                             SizedBox(height: 8,),
-                            Text("${monumentInfo.description}",
+                            Text("${monumentInfo.description??""}",
                               maxLines: 6,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
