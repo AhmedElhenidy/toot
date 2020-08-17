@@ -6,20 +6,21 @@ import 'package:toot/model/monuments_model.dart';
 import 'package:toot/model/museum_model.dart';
 import 'package:toot/statics/data_constatnts.dart';
 class GetMonumentApi{
-  Future<MonumentModel> getMonument(String name) async{
+  Future<MonumentModel2> getMonument(String name) async{
     final url = "http://www.egymuseums.somee.com/api/qrcode?name=$name" ;
     print(url);
     final response = await http.get(url);
-    final jsonResponse = json.decode(response.body);
-    print("res "+jsonResponse);
-    return  MonumentModel.fromJson(jsonResponse);
+    print(response.body);
+    Map<String , dynamic> jsonResponse = json.decode(response.body);
+    //print("res "+jsonResponse);
+    return  MonumentModel2.fromJson(jsonResponse);
   }
 }
 
 class GetMonumentApiProvider{
   static void getMonumentByID(
       {int id,
-        void onSuccess(MonumentModel monument,
+        void onSuccess(MonumentModel2 monument,
             ),
         void onError()}) async {
     //API Calling
@@ -37,7 +38,7 @@ class GetMonumentApiProvider{
     );
     //Response Handling
     if (isValidResponse(response.statusCode)) {
-      MonumentModel monument = MonumentModel.fromJson(decoded);
+      MonumentModel2 monument = MonumentModel2.fromJson(decoded);
       onSuccess(monument);
     } else {
       onError();

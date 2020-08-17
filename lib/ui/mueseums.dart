@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:toot/model/museum_model.dart';
 import 'package:toot/statics/colors.dart';
 import 'package:toot/statics/statics.dart';
+import 'package:toot/ui/museums_info.dart';
 class Museums extends StatefulWidget {
   List<MuseumsModel> museumsList;
   Museums(this.museumsList);
@@ -83,7 +84,10 @@ class _MuseumsState extends State<Museums> {
                   MuseumsModel museum =widget.museumsList[position];
                   return InkWell(
                     onTap: (){
-
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MuseumInfo(museum.id)),
+                      );
                     },
                     child: Container(
                      // width: (size.width/2)-38,
@@ -101,7 +105,7 @@ class _MuseumsState extends State<Museums> {
                           Container(
                             color: mainColor,
                             width: (size.width/2)-38,
-                            height: 90,
+                            height: 80,
                             child: Image.network("${museum.images.length>0?museum.images.first.image??"":""}",fit: BoxFit.cover,),
                           ),
                         ],

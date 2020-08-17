@@ -12,7 +12,7 @@ class MonumentSearch extends StatefulWidget {
   _MonumentSearchState createState() => _MonumentSearchState();
 }
 class _MonumentSearchState extends State<MonumentSearch> {
-  MonumentModel monumentInfo;
+  MonumentModel2 monumentInfo;
   bool searchApiFlag =false ;
   bool isnull= false;
   searchApi(){
@@ -20,24 +20,15 @@ class _MonumentSearchState extends State<MonumentSearch> {
       searchApiFlag =true;
     });
     GetMonumentApi().getMonument("${widget.name}").then((response){
-      if(response==null){
-        setState(() {
-
-        });
-      }
-      else{
         this.monumentInfo =response;
-        this.monumentInfo.voice_note=hostName+response.voice_note.substring(1);
-        print(hostName+response.voice_note.substring(1));
+        //this.monumentInfo.voice_note=hostName+response.voice_note.substring(1);
+       // print(hostName+response.voice_note.substring(1));
         print(monumentInfo.voice_note);
-      }
-
       setState(() {
         searchApiFlag =false;
       });
     },onError: (error){
       setState(() {
-        isnull=true;
         searchApiFlag=false;
         print(error.toString());
       });
@@ -66,7 +57,7 @@ class _MonumentSearchState extends State<MonumentSearch> {
         width: size.width ,
         height: size.height,
         padding: EdgeInsets.only(left: 16,right: 16),
-        child: isnull?Center(child: Text("cannot recognize the item "),):SingleChildScrollView(
+        child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -92,7 +83,7 @@ class _MonumentSearchState extends State<MonumentSearch> {
                       child: Container(
                         child: Column(
                           children: <Widget>[
-                            Text("${monumentInfo.name??""}",
+                            Text("${monumentInfo?.name??""}",
                               style: TextStyle(
                                   color: mainColor,
                                   fontSize: 16,

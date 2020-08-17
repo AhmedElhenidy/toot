@@ -9,7 +9,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:toot/statics/statics.dart';
 
 class MonumentInfo extends StatefulWidget {
-  MonumentModel monumentDetails;
+  MonumentModel2 monumentDetails;
   int id;
   MonumentInfo({this.monumentDetails,this.id});
 
@@ -18,7 +18,7 @@ class MonumentInfo extends StatefulWidget {
 }
 
 class _MonumentInfoState extends State<MonumentInfo> {
-  MonumentModel monumentDetails;
+  MonumentModel2 monumentDetails;
   double fontSize = 15;
   Duration _duration = new Duration();
   Duration _position = new Duration();
@@ -42,8 +42,11 @@ class _MonumentInfoState extends State<MonumentInfo> {
   @override
   void dispose() {
     // TODO: implement dispose
-    super.dispose();
+    advancedPlayer.stop();
     advancedPlayer.dispose();
+    audioCache.clearCache();
+    super.dispose();
+
   }
   @override
   void initState() {
@@ -75,6 +78,7 @@ class _MonumentInfoState extends State<MonumentInfo> {
   }
 
   String localFilePath;
+
 
   @override
   Widget build(BuildContext context) {
@@ -126,14 +130,7 @@ class _MonumentInfoState extends State<MonumentInfo> {
                             monumentDetails.menument_images.length > 1
                                 ? [
                                     CarouselSlider(
-                                      items: [
-                                        Image.network(
-                                            "${monumentDetails.menument_images[0].image}"),
-                                        Image.network(
-                                            "${monumentDetails.menument_images[1].image}"),
-                                        Image.network(
-                                            "${monumentDetails.menument_images[2]}"),
-                                      ],
+                                      items: monumentDetails.menument_images.map((e) => Image.network(e.image)).toList(),
                                       autoPlay: true,
                                       aspectRatio: 2.0,
                                       onPageChanged: (index) {

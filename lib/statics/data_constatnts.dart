@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 
 const String BASE_URL = 'http://egymuseums.somee.com/' ;
+const String BASE_URL2 = 'http://egymuseums.somee.com' ;
 
 //Static Headers
 const Map<String, String> apiHeaders = {
@@ -14,6 +15,7 @@ const Map<String, String> apiHeaders = {
 const String HOME_END_POINT = "rpc/ApiPlaces/GetHome";
 const String HOUSES_END_POINT = "rpc/ApiHouses/Gethouses";
 const String GET_MONUMENT_BY_ID_END_POINT = "rpc/ApiMenuments/Getmenument/";
+const String GET_MUSEUM_INFO_END_POINT = "rpc/ApiPlaces/Getplace/";
 
 
 

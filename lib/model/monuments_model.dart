@@ -27,13 +27,13 @@ class MonumentImage {
         return MonumentImage(
             altr: json['altr'],
             id: json['id'],
-            image:json['image']!=null? "$BASE_URL${json['image'].toString().substring(1)}":"",
+            image:json['image']!=null? "$BASE_URL2${json['image'].toString().substring(1)}":"",
             menument_id: json['menument_id'],
         );
     }
 }
 
-class MonumentModel {
+class MonumentModel2 {
     String description;
     int id;
     List<MonumentImage> menument_images;
@@ -44,10 +44,10 @@ class MonumentModel {
     String qR_image;
     String voice_note;
 
-    MonumentModel({this.description, this.id, this.menument_images, this.name, this.no_of_scans, this.place_id, this.place_name, this.qR_image, this.voice_note});
+    MonumentModel2({this.description, this.id, this.menument_images, this.name, this.no_of_scans, this.place_id, this.place_name, this.qR_image, this.voice_note});
 
-    factory MonumentModel.fromJson(Map<String, dynamic> json) {
-        return MonumentModel(
+    factory MonumentModel2.fromJson(Map<String, dynamic> json) {
+        return MonumentModel2(
             description: json['description'],
             id: json['id'],
             menument_images: json['menument_images'] != null ? (json['menument_images'] as List).map((i) => MonumentImage.fromJson(i)).toList() : null,
@@ -56,7 +56,8 @@ class MonumentModel {
             place_id: json['place_id'],
             place_name: json['place_name'],
             qR_image: json['qR_image'],
-            voice_note: json['voice_note']!=null?"$BASE_URL${json['voice_note'].toString().substring(1)}":"",
+            voice_note: json['voice_note']!=null?"$BASE_URL2${json['voice_note'].toString().substring(1)}":"",
+            //voice_note: "http://egymuseums.somee.com/Content/Audio/AudioOgg20352252804.ogg",
         );
     }
 }
